@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignaChat - Sign Language Translation</title>
+  <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">SignaChat</div>
+        <div class="nav-links">
+          <a href="learn-page.html">Learn</a>
+          <a href="translate-page.html">Translate</a>
+          <a href="SignaChat-about-page.html">About</a>
+        </div>
+        <div class="profile-icon">U</div>
+      </nav>
+    </div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.149.0/examples/jsm/"
+        }
+      }
+      </script>
+  </header>
+  
+  <main>
+    <section class="hero">
+      <div class="container" style="display: flex; align-items: center;">
+        <div class="hero-content">
+          <h1>Breaking communication barriers with sign language</h1>
+          <p>SignBridge uses advanced technology to translate between sign language and spoken language in real-time, making communication accessible for everyone.</p>
+          <div>
+            <a href="#translate" class="btn">Start Translating</a>
+            <a href="#learn" class="btn btn-secondary">Learn Sign Language</a>
+          </div>
+        </div>
+        <div class="avatar-container" id="avatar-container">
+          <div class="avatar-placeholder">
+            <h2>3D Avatar</h2>
+            <p>This is where the interactive 3D avatar will be rendered using Three.js</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="container" id="translate">
+      <h2 style="text-align: center; margin-bottom: 40px; font-size: 36px;">Translation Features</h2>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h3>Translate Sign Language</h3>
+          <p>Our advanced computer vision technology captures and translates sign language into text in real-time.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔊</div>
+          <h3>Audio to Sign</h3>
+          <p>Convert spoken language to sign language animation displayed through our 3D avatar.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>AR Overlay</h3>
+          <p>Overlay sign language translation on video calls or recorded lectures with our augmented reality features.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h3>Text to Sign</h3>
+          <p>Type text and have it translated into sign language through our animated 3D avatar.</p>
+        </div>
+      </div>
+    </section>
+    
+    <section class="container" id="learn" style="margin-top: 80px;">
+      <h2 style="text-align: center; margin-bottom: 40px; font-size: 36px;">Learn Sign Language</h2>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">📚</div>
+          <h3>Interactive Lessons</h3>
+          <p>Learn sign language through our interactive lessons designed for all levels from beginner to advanced.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Sign Language Dictionary</h3>
+          <p>Browse our comprehensive dictionary with video demonstrations of signs and gestures.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>SignBridge</h3>
+          <p style="color: #bbb; margin-bottom: 20px;">Breaking communication barriers and making the world more accessible through technology.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#translate">Translate</a></li>
+            <li><a href="#learn">Learn</a></li>
+            <li><a href="#about">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">API Reference</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <ul>
+            <li><a href="tinaamarion@gmail.com">info@signaChat.com</a></li>
+            <li><a href="#">+1 (555) 123-4567</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 SignaChat. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+
+    // Three.js implementation for glTF model loading
+    document.addEventListener('DOMContentLoaded', function() {
+      // Only proceed if Three.js and GLTFLoader are loaded
+      if (typeof THREE === 'undefined') {
+        console.error('Three.js not loaded');
+        return;
+      }
+
+      // Get the container element
+      const container = document.getElementById('avatar-container');
+      
+      // Clear placeholder content
+      container.innerHTML = '';
+      
+      // Set up scene
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xc8dcf0);
+      
+      // Set up camera - positioned to view from left angle
+      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.set(-1.5, 1.3, 2.2); // Position camera at left angle
+      camera.lookAt(0, 1, 0);
+      
+      // Set up renderer
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      if (parseInt(THREE.REVISION) >= 152) {
+        // For Three.js r152 and newer
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+      } else {
+        // For older versions of Three.js
+        renderer.outputEncoding = THREE.sRGBEncoding;
+      }
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1;
+      container.appendChild(renderer.domElement);
+      
+      // Add lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+      scene.add(ambientLight);
+      
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      directionalLight.position.set(0, 10, 10);
+      directionalLight.castShadow = true;
+      directionalLight.shadow.mapSize.width = 1024;
+      directionalLight.shadow.mapSize.height = 1024;
+      scene.add(directionalLight);
+
+      // Add a soft backlight to highlight the character
+      const backLight = new THREE.DirectionalLight(0xffffff, 0.3);
+      backLight.position.set(0, 5, -5);
+      scene.add(backLight);
+          
+      // Controls for user interaction - only allow zooming, no rotation
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.target.set(0, 1, 0);
+      controls.update();
+      controls.enablePan = false;
+      controls.enableRotate = false; // Disable rotation
+      controls.enableZoom = true; // Allow zooming
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.minDistance = 1.5; // Closer minimum zoom distance
+      controls.maxDistance = 5;
+      
+      // Loading manager to track loading process
+      const manager = new THREE.LoadingManager();
+      manager.onProgress = function(url, itemsLoaded, itemsTotal) {
+        const progress = (itemsLoaded / itemsTotal * 100).toFixed(2);
+        console.log(`Loading: ${progress}% completed`);
+      };
+      
+      manager.onError = function(url) {
+        console.error('Error loading', url);
+      };
+      
+      // Load glTF model
+      const loader = new GLTFLoader(manager);
+      const dracoLoader = new DRACOLoader();
+      dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.3/');
+      loader.setDRACOLoader(dracoLoader);
+
+      // Set path to your model
+      const modelPath = 'assets/models/snow_rig[TEST].gltf';
+      
+      // Loading overlay
+      const loadingOverlay = document.createElement('div');
+      loadingOverlay.style.position = 'absolute';
+      loadingOverlay.style.top = '0';
+      loadingOverlay.style.left = '0';
+      loadingOverlay.style.width = '100%';
+      loadingOverlay.style.height = '100%';
+      loadingOverlay.style.backgroundColor = 'rgba(200, 220, 240, 0.7)';
+      loadingOverlay.style.display = 'flex';
+      loadingOverlay.style.justifyContent = 'center';
+      loadingOverlay.style.alignItems = 'center';
+      loadingOverlay.innerHTML = '<div><h3>Loading 3D Avatar...</h3><p>Please wait</p></div>';
+      container.appendChild(loadingOverlay);
+      
+      loader.load(
+        modelPath,
+        function(gltf) {
+          // Remove loading overlay
+          container.removeChild(loadingOverlay);
+          
+          const model = gltf.scene;
+          
+          // Enable shadows
+          model.traverse(function(node) {
+            if (node.isMesh) {
+              node.castShadow = true;
+              node.receiveShadow = true;
+            }
+          });
+          
+          // Center the model
+          const box = new THREE.Box3().setFromObject(model);
+          const center = box.getCenter(new THREE.Vector3());
+          const size = box.getSize(new THREE.Vector3());
+          
+          // Adjust model position and scale
+          model.position.x -= center.x;
+          model.position.y -= center.y - (size.y / 2);
+          model.position.z -= center.z;
+          
+          // Scale model appropriately
+          const maxDim = Math.max(size.x, size.y, size.z);
+          const scale = 2 / maxDim;
+          model.scale.set(scale, scale, scale);
+          
+          scene.add(model);
+          
+          // Since there are no animations, we don't need the mixer
+          console.log('Model loaded successfully');
+        },
+        function(xhr) {
+          // Loading progress
+          const progress = (xhr.loaded / xhr.total * 100).toFixed(1);
+          console.log(`Model: ${progress}% loaded`);
+          loadingOverlay.innerHTML = `<div><h3>Loading 3D Avatar...</h3><p>${progress}% complete</p></div>`;
+        },
+        function(error) {
+          // Error handling
+          console.error('An error happened loading the model:', error);
+          container.removeChild(loadingOverlay);
+          container.innerHTML = '<div class="avatar-placeholder"><h2>Error Loading Model</h2><p>Failed to load 3D avatar model. Check console for details.</p></div>';
+        }
+      );
+      
+      // Animation loop - no animation or auto-rotation
+      function animate() {
+        requestAnimationFrame(animate);
+        
+        // Update controls for damping effect when zooming
+        controls.update();
+        
+        renderer.render(scene, camera);
+      }
+      
+      animate();
+      
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      });
+    });
+  </script>
+</body>
+</html>
