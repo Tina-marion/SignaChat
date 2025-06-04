@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SignaChat - Translation Services</title>
+   <div class="camera-feed">
+    <video id="camera" autoplay playsinline></video>
+  </div>
+
+  <button class="btn" id="startCameraBtn">Start Camera</button>
+
+  <!-- Link to external JS file -->
+  <script src="camera.js"></script>
   <style>
     :root {
       --primary: #4A6FA5;
@@ -360,7 +368,7 @@
   <header>
     <div class="container">
       <nav>
-        <a href="sign-language-landing-page.html" class="logo">SignBridge</a>
+        <a href="sign-language-landing-page.html" class="logo">SignaChat</a>
         <div class="nav-links">
           <a href="learn-page.html">Learn</a>
           <a href="#" class="active">Translate</a>
@@ -375,7 +383,7 @@
     <section class="page-header">
       <div class="container">
         <h1>Real-Time Translation</h1>
-        <p>Choose your preferred translation mode and start breaking communication barriers with SignBridge's advanced technology.</p>
+        <p>Choose your preferred translation mode and start breaking communication barriers with SignaChat's advanced technology.</p>
       </div>
     </section>
     
@@ -409,8 +417,8 @@
             <h2 class="panel-title">Input</h2>
             <div class="panel-options">
               <button class="option-button active">English</button>
-              <button class="option-button">Spanish</button>
-              <button class="option-button">French</button>
+              <button class="option-button">Acholi</button>
+              <button class="option-button">Luganda</button>
             </div>
           </div>
           
@@ -431,9 +439,11 @@
           <div class="panel-header">
             <h2 class="panel-title">Output</h2>
             <div class="panel-options">
-              <button class="option-button active">ASL</button>
-              <button class="option-button">BSL</button>
-              <button class="option-button">Other</button>
+             <select id="target-language" class="option-button">
+             <option value="eng" selected>English</option>
+            <option value="lug">Luganda</option>
+            <option value="nyn">Acholi</option> 
+          </select>
             </div>
           </div>
           
@@ -502,7 +512,7 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
-          <h3>SignBridge</h3>
+          <h3>SignaChat</h3>
           <p style="color: #bbb; margin-bottom: 20px;">Breaking communication barriers and making the world more accessible through technology.</p>
         </div>
         <div class="footer-section">
